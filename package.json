@@ -1,0 +1,13 @@
+{
+  "name": "automarket-vapi",
+  "version": "1.0.0",
+  "main": "realtime-server.js",
+  "scripts": {
+    "start": "node realtime-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0",
+    "express": "^4.18.3",
+    "openai": "^4.0.0"
+  }
+}
