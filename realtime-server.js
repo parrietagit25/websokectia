@@ -4,13 +4,13 @@ const { WebSocketServer } = require("ws");
 
 const port = process.env.PORT || 8080;
 
-// Servidor HTTP básico (para que Render tenga algo que servir en "/")
+// Servidor HTTP básico para las peticiones normales (GET /)
 const server = http.createServer((req, res) => {
   res.writeHead(200, { "Content-Type": "text/plain" });
   res.end("WebSocket server is running.\n");
 });
 
-// Crear WebSocketServer usando el mismo servidor HTTP
+// WebSocketServer usando el mismo servidor HTTP
 const wss = new WebSocketServer({ server });
 
 wss.on("connection", (ws) => {
