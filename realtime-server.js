@@ -1,34 +1,31 @@
-import express from "express";
-import { WebSocketServer } from "ws";
-import OpenAI from "openai";
+// realtime-server.js
+const http = require("http");
+const { WebSocketServer } = require("ws");
 
-const app = express();
-
-// Render asigna el puerto en PORT
 const port = process.env.PORT || 8080;
 
-const server = app.listen(port, () => {
-  console.log("🚀 Server listening on port", port);
+// Servidor HTTP básico (para que Render tenga algo que servir en "/")
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("WebSocket server is running.\n");
 });
 
-// WebSocket server
+// Crear WebSocketServer usando el mismo servidor HTTP
 const wss = new WebSocketServer({ server });
 
-// OpenAI client
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-// Handle WebSocket connections
 wss.on("connection", (ws) => {
-  console.log("✔ Client connected");
+  console.log("✔ Cliente conectado");
 
-  ws.on("message", async (data) => {
-    console.log("📩 Received:", data.toString());
-
-    // Example simple echo:
-    ws.send("Echo: " + data.toString());
+  ws.on("message", (message) => {
+    console.log("📩 Mensaje recibido:", message.toString());
+    ws.send("Echo: " + message.toString());
   });
 
-  ws.on("close", () => console.log("❌ Client disconnected"));
+  ws.on("close", () => {
+    console.log("❌ Cliente desconectado");
+  });
+});
+
+server.listen(port, () => {
+  console.log("🚀 Server listening on port", port);
 });
