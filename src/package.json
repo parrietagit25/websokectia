@@ -1,11 +1,12 @@
 {
   "name": "websoketia",
   "version": "1.0.0",
-  "main": "realtime-server.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node realtime-server.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "ws": "^8.18.0"
+    "ws": "^8.13.0"
   }
 }

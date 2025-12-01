@@ -1,31 +1,31 @@
-// realtime-server.js
-const http = require("http");
-const { WebSocketServer } = require("ws");
+import WebSocket, { WebSocketServer } from "ws";
+import http from "http";
 
-const port = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
-// Servidor HTTP básico para las peticiones normales (GET /)
+// Servidor HTTP simple para evitar errores
 const server = http.createServer((req, res) => {
   res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end("WebSocket server is running.\n");
+  res.end("WebSocket server is running 🚀");
 });
 
-// WebSocketServer usando el mismo servidor HTTP
+// Crear WebSocket server sobre HTTP server
 const wss = new WebSocketServer({ server });
 
 wss.on("connection", (ws) => {
-  console.log("✔ Cliente conectado");
+  console.log("🔵 Nuevo cliente conectado");
 
-  ws.on("message", (message) => {
-    console.log("📩 Mensaje recibido:", message.toString());
-    ws.send("Echo: " + message.toString());
+  ws.send("👋 Bienvenido al servidor WebSocket!");
+
+  ws.on("message", (msg) => {
+    console.log("📩 Mensaje recibido:", msg.toString());
+    ws.send("Echo: " + msg);
   });
 
-  ws.on("close", () => {
-    console.log("❌ Cliente desconectado");
-  });
+  ws.on("close", () => console.log("🔴 Cliente desconectado"));
 });
 
-server.listen(port, () => {
-  console.log("🚀 Server listening on port", port);
+// Iniciar servidor
+server.listen(PORT, () => {
+  console.log("🚀 Servidor WebSocket en puerto:", PORT);
 });
